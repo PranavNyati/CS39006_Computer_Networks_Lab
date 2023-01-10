@@ -76,7 +76,7 @@ int main(){
     printf("%s\n", buffer);
 
 	/* Message by the client to the server */
-	strcpy(buffer,"I have received your message (system date and time).");
+	strcpy(buffer,"I have received your message (the server date and time).\n");
 	send(sockfd, buffer, strlen(buffer) + 1, 0);
 		
 	close(sockfd);
