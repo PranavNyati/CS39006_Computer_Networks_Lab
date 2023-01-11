@@ -93,12 +93,18 @@ int main(){
         /* We initialize the buffer, copy the message to it, and send the message to the client. */
 
         strcpy(buffer, "Hello, this is the server. I am sending you the current time in my system.");
-        send(newsockfd, buffer, strlen(buffer) + 1, 0);
+        if (send(newsockfd, buffer, strlen(buffer) + 1, 0) != strlen(buffer) + 1){
+            perror("send() system call sent a different number of bytes than expected !\n");
+            exit(0);
+        }
 
         time_t now =  time(0);
         struct tm tstruct = *localtime(&now);
         strftime(buffer, sizeof(buffer), "%x - %I:%M:%S %p", &tstruct);
-        send(newsockfd, buffer, strlen(buffer) + 1, 0);
+        if (send(newsockfd, buffer, strlen(buffer) + 1, 0) != strlen(buffer) + 1){
+            perror("send() system call sent a different number of bytes than expected !\n");
+            exit(0);
+        }
 
         /* We now receive a message from the client. For this example we make an assumption that the entire message 
            sent from the client will come together. In general, this need not be true for TCP sockets (unlike UDPi sockets), 
@@ -107,7 +113,10 @@ int main(){
 		  is received. Look up the return value of recv() to see how you can do this.
 		*/
 
-        recv(newsockfd, buffer, 500, 0);
+        if (recv(newsockfd, buffer, 500, 0) < 0){
+            perror("Unable to receive message from the client: recv() system call failed !\n");
+            exit(0);
+        }
 
         printf("Message from the client:\n");
         printf("%s\n", buffer);

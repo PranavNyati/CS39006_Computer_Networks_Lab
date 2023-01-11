@@ -1,6 +1,6 @@
 /*
     COMPUTER NETWORKS LAB(CS39006) - SEM 6
-    ASSIGNMENT 1 - PROBLEM 1
+    ASSIGNMENT 1 - PROBLEM 2
     NAME : PRANAV NYATI
     ROLL : 20CS30037
 */
@@ -18,8 +18,8 @@
 
 int main(){
 
-    int sockfd;   /* Socket descriptor */
-    
+    int sockfd;  /* Socket descriptor */
+
     struct sockaddr_in server_addr;  
 
     /* Opening a socket is exactly similar to the server process */
@@ -63,34 +63,62 @@ int main(){
 	   non-blocking modes, refer to the online man pages.
 	*/
 
-    char buffer[500];
+    const char* exit_str = "-1\0";
+    int bytes_sent = 0;
 
-    for (int i = 0; i < 500; i++) buffer[i] = '\0';    // initialising the buffer
+    while(1){
 
-    /* Receive the data sent by thr server to this client using the recv() system call */
-    if (recv(sockfd, buffer, 500, 0) < 0){
-        perror("Unable to receive data from the server: recv() system call failed !\n");
-        exit(0);
+        printf("\nEnter the arithmetic expression to be sent to the server(end with a newline character)\n \tOR \nEnter -1 to terminate the client process.\n");
+        
+        unsigned int len_max = 10;
+        unsigned int current_len = 0;
+
+        char *user_input = malloc(len_max*sizeof(char));
+        current_len = len_max;
+        
+
+        if (user_input != NULL){
+
+            int ch = EOF;
+            unsigned int i = 0;
+
+            // accept user input until a newline character is encountered or EOF is encountered
+            while ((ch = getchar()) != '\n' && ch != EOF){
+                user_input[i++] = (char)ch;
+                    
+                // if the user input exceeds the allocated memory, reallocate memory
+                if (i == current_len){
+                    current_len = i + len_max;
+                    //current_len = current_len + 1;
+                    user_input = realloc(user_input, current_len*sizeof(char));
+                }
+            }
+            user_input[i] = '\0';
+
+            if(strcmp(user_input, exit_str) == 0){
+                // printf("Client process terminated.\n");
+                break;
+            }
+
+            printf("User input taken successfully: %s\n", user_input);
+            printf("Size of user input : %ld bytes\n", strlen(user_input));
+
+            if ((bytes_sent = send(sockfd, user_input, strlen(user_input) + 1, 0)) != strlen(user_input) + 1){
+                perror("send() system call sent a different number of bytes than expected !\n");
+                exit(0);
+            }
+
+            printf("Bytes sent : %d bytes\n", bytes_sent);
+        }
+
+    
     }
 
-    printf("Message from the server:\n\n");
-	printf("%s\n", buffer);
-
-    if (recv(sockfd, buffer, 500, 0) < 0){
-        perror("Unable to receive data from the server: recv() system call failed !\n");
-        exit(0);
-    }
-
-    printf("%s\n", buffer);
-
-	/* Message by the client to the server */
-	strcpy(buffer,"I have received your message (the server date and time).\n");
-	if (send(sockfd, buffer, strlen(buffer) + 1, 0) != strlen(buffer) + 1){
-        perror("send() system call sent a different number of bytes than expected !\n");
-        exit(0);
-    }
-
-	close(sockfd);
+    close(sockfd);
+    printf("Client process terminated.\n");
 
     return 0;
+    
 }
+
+
