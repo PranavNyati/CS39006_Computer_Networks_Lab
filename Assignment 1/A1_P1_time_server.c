@@ -101,6 +101,7 @@ int main(){
         time_t now =  time(0);
         struct tm tstruct = *localtime(&now);
         strftime(buffer, sizeof(buffer), "%x - %I:%M:%S %p", &tstruct);
+        
         if (send(newsockfd, buffer, strlen(buffer) + 1, 0) != strlen(buffer) + 1){
             perror("send() system call sent a different number of bytes than expected !\n");
             exit(0);
