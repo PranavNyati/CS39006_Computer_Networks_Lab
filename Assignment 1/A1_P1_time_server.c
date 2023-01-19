@@ -24,7 +24,7 @@
 
 int main(){
 
-    int sockfd, newsockfd;    /* Socket descriptor */
+    int sockfd, newsockfd;     /* Socket descriptor */
 
     struct sockaddr_in server_addr, client_addr; /* Server and client address  are stored in these sockaddr_in structures */
         
