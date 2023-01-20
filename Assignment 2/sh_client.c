@@ -44,7 +44,7 @@ int main(){
     char *client_buff = (char *)malloc(MAX_BUFF_SIZE * sizeof(char));
     memset(client_buff, 0, MAX_BUFF_SIZE);
 
-    // ############ RECEIVE LOGIN MESSAGE FROM SERVER IN CHUNKS ############  => DONE
+    // ############ RECEIVE LOGIN MESSAGE FROM SERVER IN CHUNKS ############  
 
     while(1){
         bytes_recv = recv(sockfd, buffer, MAX_BUFF_SIZE, 0);
@@ -107,7 +107,7 @@ int main(){
     // clearing the receive buffer
     memset(buffer, 0, MAX_BUFF_SIZE);
 
-    // ############ RECEIVE USERNAME MATCH STATUS FROM SERVER IN CHUNKS ############ => DONE
+    // ############ RECEIVE USERNAME MATCH STATUS FROM SERVER IN CHUNKS ############ 
 
     // realloc the client buffer to the initial size
     client_buff = (char *)realloc(client_buff, MAX_BUFF_SIZE * sizeof(char));
@@ -177,7 +177,7 @@ int main(){
             unsigned int current_len = MAX_BUFF_SIZE;
             int total_bytes_sent = 0, end_flag = 0;
 
-            // ############ SEND SHELL CMD TO SERVER IN CHUNKS ############  => DONE
+            // ############ SEND SHELL CMD TO SERVER IN CHUNKS ############ 
 
             while(fgets(shell_cmd, MAX_BUFF_SIZE, stdin) != NULL){
                 size_t len = strlen(shell_cmd);
@@ -210,7 +210,7 @@ int main(){
 
             printf("\nTotal no of bytes sent: %d\n", total_bytes_sent);
             
-            // ############ RECEIVE RESULT OF SHELL CMD EXECUTION FROM SERVER IN CHUNKS ############ => DONE
+            // ############ RECEIVE RESULT OF SHELL CMD EXECUTION FROM SERVER IN CHUNKS ############ 
 
             // realloc the client buffer to the initial size
             client_buff = (char *)realloc(client_buff, MAX_BUFF_SIZE * sizeof(char));

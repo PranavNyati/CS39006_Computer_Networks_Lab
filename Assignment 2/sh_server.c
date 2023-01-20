@@ -79,7 +79,7 @@ int execute_cmd(char *cmd, char *result, int result_len){
 
         int flag;
         {
-            if (args[1] == NULL)
+            if (args[1] == NULL || (strcmp(args[1], "~") == 0 ) || (strcmp(args[1], "~/") == 0))
                 flag = chdir(getenv("HOME"));
             
             else
@@ -199,7 +199,7 @@ int main(){
             char *serv_buff = (char *) malloc(MAX_BUFF_SIZE * sizeof(char));
             memset(serv_buff, 0, MAX_BUFF_SIZE);
 
-            // ############ RECEIVE USERNAME IN CHUNKS ############  => DONE
+            // ############ RECEIVE USERNAME IN CHUNKS ############  
 
             while(1){
                 bytes_recv = recv(newsockfd, buffer, MAX_BUFF_SIZE, 0);
@@ -274,7 +274,7 @@ int main(){
                 i = 0;
                 curr_cmd_len = MAX_BUFF_SIZE;
 
-                // ########## RECEIVE SHELL COMMAND IN CHUNKS ##########  => DONE
+                // ########## RECEIVE SHELL COMMAND IN CHUNKS ##########  
 
                 // receiving a shell command from the client
                 while(1){
@@ -326,7 +326,7 @@ int main(){
                 
                 int res = execute_cmd(client_cmd, result, result_len); // function call to execute the shell command
 
-                //  ############### SEND TO BE DONE IN CHUNKS ##################### => DONE
+                //  ############### SEND TO BE DONE IN CHUNKS ##################### 
 
                 int bytes_sent = 0, total_bytes_sent = 0, end_flag = 0;
                 int curr_result_len = 0;
