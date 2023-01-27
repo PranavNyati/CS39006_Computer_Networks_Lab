@@ -22,7 +22,7 @@ int main(){
     int sockfd;     /* Socket descriptor */
     struct sockaddr_in server_addr;
     struct pollfd fdset[1];
-    int nfds = 1, timeout = 10000, try_ctr = 0;
+    int nfds = 1, timeout = 3000, try_ctr = 0;
 
     if ( (sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0){
         perror("Cannot create the socket: socket() system call failed !\n");

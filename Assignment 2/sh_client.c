@@ -99,8 +99,7 @@ int main(){
     // ############ SEND USERNAME TO SERVER ############
 
     if (send(sockfd, buffer, strlen(buffer) + 1, 0) != strlen(buffer) + 1){
-        perror("send() system call sent a different number of bytes than expected !\n");
-        exit(0);
+
     }
     printf("\nUsername successfully sent to the server.\n");
 
