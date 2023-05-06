@@ -77,7 +77,7 @@ int main(int argc, char* argv[]){
             bytes_recv = recv(newsockfd, buffer, MAX_BUFF_SIZE, 0);
 
             if (bytes_recv < 0){
-                perror("Unable to receive data from the server: recv() system call failed !\n");
+                perror("Unable to receive data from the load balancer: recv() system call failed !\n");
                 exit(0);
             }
 
